@@ -1,0 +1,1 @@
+This is chess webapp that im writing to refresh my memory on Java, Spring, REST, SQL, React and Azure.
