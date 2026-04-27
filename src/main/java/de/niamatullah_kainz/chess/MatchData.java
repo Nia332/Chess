@@ -3,22 +3,55 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/*Based on the [PGN](Portable_Game_Notation.txt) standard */
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+
+//Based on the [PGN](Portable_Game_Notation.txt) standard
+
+@Entity
+@Table
 public class MatchData {
-    String event;
-    String site;
-    LocalDate date;
-    int round;
-    Player playerWhite;
-    Player playerBlack;
-    String timeControl;
-    List<String> moves;
+    @Id
+    @Column(name="MATCH_ID")
+    @SequenceGenerator(
+        name = "matchData_sequence",
+        sequenceName = "matchData_sequence",
+        allocationSize = 1
+    )
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "matchData_sequence"
+    )
+    private Long id;
+    private String event;
+    private String site;
+    private LocalDate date;
+    private int round;
+    @Embedded
+    private Player playerWhite;
+    @Embedded
+    private Player playerBlack; //Todo fix duplicate mappings for player fields
+    private String timeControl;
+    @ElementCollection
+    @CollectionTable(name = "MOVES", joinColumns = @JoinColumn(name="id"))
+    @Column(name="MOVE_NOTATION")
+    private List<String> moves;
 
     public MatchData() {
         this.moves = new ArrayList<>();
     }
 
-    public MatchData(String event, String site, LocalDate date, int round, Player playerWhite, Player playerBlack, String timeControl, List<String> moves) {
+    public MatchData(String event, String site, LocalDate date, int round, Player playerWhite, Player playerBlack, String timeControl, 
+                    List<String> moves) {
         this.event = event;
         this.site = site;
         this.date = date;
@@ -60,6 +93,10 @@ public class MatchData {
                 moveText.toString().trim() + " " + playerWhite.getScore() + "-" + playerBlack.getScore();  
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getEvent() {
         return event;
     }
@@ -90,6 +127,10 @@ public class MatchData {
 
     public List<String> getMoves() {
         return moves;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setEvent(String event) {

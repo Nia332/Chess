@@ -1,8 +1,14 @@
 package de.niamatullah_kainz.chess;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class Player {
-    Color color;
-    String name;
-    int score;
+    @Column(insertable=false, updatable=false)
+    private Color color;
+    private String name;
+    private int score;
 
     public Player(Color color, String name, int score) {
         this.color = color;

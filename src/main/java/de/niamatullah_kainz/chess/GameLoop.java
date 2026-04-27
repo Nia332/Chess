@@ -62,7 +62,7 @@ public class GameLoop {
         boolean endMatch = false;
         String move;
         do {
-            if (playerWhite.name.equals("Player")) {
+            if (playerWhite.getName().equals("Player")) {
                 //white's turn
                 boolean endTurn;
                 do {
