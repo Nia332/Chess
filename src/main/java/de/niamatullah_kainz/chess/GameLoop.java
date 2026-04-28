@@ -4,10 +4,8 @@ import java.util.Scanner;
 
 public class GameLoop {
 
-    Scanner scanner;
-    MatchData matchData;
-    Player playerWhite;
-    Player playerBlack;
+    private final Scanner scanner = new Scanner(System.in);
+    private MatchData matchData;
 
     private static volatile GameLoop instance;
 
@@ -43,26 +41,23 @@ public class GameLoop {
     private void setupMatch() {
         matchData = new MatchData();
         matchData.setDate(LocalDate.now());
-        scanner = new Scanner(System.in);
         //players are constructed this way to follow the PGN format of white and black players
-        if(chooseColor() == Color.WHITE) {
-            playerWhite = new Player(Color.WHITE, "Player", 0);
-            playerBlack = new Player(Color.BLACK, "Computer", 0);
+        if(playerIsWhite()) {
+            matchData.setWhite("Player");
+            matchData.setBlack("Computer");
             System.out.println("You are white. Please enter your first move:");
         } else {
-            playerWhite = new Player(Color.WHITE, "Computer", 0);
-            playerBlack = new Player(Color.BLACK, "Player", 0);
+            matchData.setWhite("Computer");
+            matchData.setBlack("Player");
             System.out.println("You are Black. White moves first!");
         }
-        matchData.setPlayerWhite(playerWhite);
-        matchData.setPlayerBlack(playerBlack);
     }
 
     private void playMatch() {
         boolean endMatch = false;
         String move;
         do {
-            if (playerWhite.getName().equals("Player")) {
+            if (matchData.getWhite().equals("Player")) {
                 //white's turn
                 boolean endTurn;
                 do {
@@ -121,21 +116,17 @@ public class GameLoop {
         System.out.println(matchData.formatToPGN()); //TODO: save to file instead of printing to console
     }
 
-    private Color chooseColor() {
-        boolean cont = true;
+    private boolean playerIsWhite() {
         do {
             System.out.println("Welcome to Chess! Do you want to play black or white?");
             String input = scanner.nextLine().toLowerCase().strip();
             
             if (input.equals("white")) {
-                cont = false;
-                return Color.WHITE;
+                return true;
             } else if (input.equals("black")) {
-                cont = false;
-                return Color.BLACK;
+                return false;
             }
-        } while (cont);
-        return Color.WHITE; // Default return
+        } while (true);
     }
 
     private String computeMove() {

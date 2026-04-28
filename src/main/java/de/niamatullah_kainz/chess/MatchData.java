@@ -2,11 +2,9 @@ package de.niamatullah_kainz.chess;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,29 +34,30 @@ public class MatchData {
     private String site;
     private LocalDate date;
     private int round;
-    @Embedded
-    private Player playerWhite;
-    @Embedded
-    private Player playerBlack; //Todo fix duplicate mappings for player fields
+    private String white;
+    private String black;
     private String timeControl;
+    private int[] result;
     @ElementCollection
     @CollectionTable(name = "MOVES", joinColumns = @JoinColumn(name="id"))
     @Column(name="MOVE_NOTATION")
     private List<String> moves;
 
     public MatchData() {
+        this.result = new int[]{0,0};
         this.moves = new ArrayList<>();
     }
 
-    public MatchData(String event, String site, LocalDate date, int round, Player playerWhite, Player playerBlack, String timeControl, 
+    public MatchData(String event, String site, LocalDate date, int round, String white, String black, String timeControl, int[] result,
                     List<String> moves) {
         this.event = event;
         this.site = site;
         this.date = date;
         this.round = round;
-        this.playerWhite = playerWhite;
-        this.playerBlack = playerBlack;
+        this.white = white;
+        this.black = black;
         this.timeControl = timeControl;
+        this.result = result;
         this.moves = moves;
     }
 
@@ -86,11 +85,11 @@ public class MatchData {
                 "[Site \"" + site + "\"]\n" +
                 "[Date \"" + date + "\"]\n" +
                 "[Round \"" + round + "\"]\n" +
-                "[White \"" + playerWhite.getName() + "\"]\n" +
-                "[Black \"" + playerBlack.getName() + "\"]\n" +
+                "[White \"" + white + "\"]\n" +
+                "[Black \"" + black + "\"]\n" +
                 "[TimeControl \"" + timeControl + "\"]\n" +
-                "[Result \"" + playerWhite.getScore() + "-" + playerBlack.getScore() + "\"]\n\n" + 
-                moveText.toString().trim() + " " + playerWhite.getScore() + "-" + playerBlack.getScore();  
+                "[Result \"" + result[0] + "-" + result[1] + "\"]\n\n" + 
+                moveText.toString().trim() + " " + result[0] + "-" + result[1];  
     }
 
     public Long getId() {
@@ -113,16 +112,20 @@ public class MatchData {
         return round;
     }
 
-    public Player getPlayerWhite() {
-        return playerWhite;
+    public String getWhite() {
+        return white;
     }
 
-    public Player getPlayerBlack() {
-        return playerBlack;
+    public String getBlack() {
+        return black;
     }
 
     public String getTimeControl() {
         return timeControl;
+    }
+
+    public int[] getResult() {
+        return result;
     }
 
     public List<String> getMoves() {
@@ -149,16 +152,20 @@ public class MatchData {
         this.round = round;
     }
 
-    public void setPlayerWhite(Player playerWhite) {
-        this.playerWhite = playerWhite;
+    public void setWhite(String white) {
+        this.white = white;
     }
 
-    public void setPlayerBlack(Player playerBlack) {
-        this.playerBlack = playerBlack;
+    public void setBlack(String black) {
+        this.black = black;
     }
 
     public void setTimeControl(String timeControl) {
         this.timeControl = timeControl;
+    }
+
+    public void setResult(int[] result) {
+        this.result = result;
     }
 
     public void setMoves(List<String> moves) {
