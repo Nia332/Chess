@@ -1,27 +1,18 @@
-package de.niamatullah_kainz.chess;
+package de.niamatullah_kainz.chess.service;
+
 import java.time.LocalDate;
 import java.util.Scanner;
+import org.springframework.stereotype.Service;
+import de.niamatullah_kainz.chess.model.MatchData;
 
-public class GameLoop {
+@Service
+public class GameLoopService {
 
     private final Scanner scanner = new Scanner(System.in);
     private MatchData matchData;
+    
+    public GameLoopService() {
 
-    private static volatile GameLoop instance;
-
-    // Private constructor to prevent external instantiation
-    private GameLoop() {
-    }
-
-    public static GameLoop getInstance() {
-        if (instance == null) {
-            synchronized (GameLoop.class) {
-                if (instance == null) {
-                    instance = new GameLoop();
-                }
-            }
-        }
-        return instance;
     }
 
     public void start() {

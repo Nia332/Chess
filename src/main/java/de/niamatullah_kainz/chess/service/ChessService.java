@@ -1,4 +1,4 @@
-package de.niamatullah_kainz.chess;
+package de.niamatullah_kainz.chess.service;
 
 import org.springframework.stereotype.Service;
 

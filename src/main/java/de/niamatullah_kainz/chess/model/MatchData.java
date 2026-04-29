@@ -1,4 +1,4 @@
-package de.niamatullah_kainz.chess;
+package de.niamatullah_kainz.chess.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
