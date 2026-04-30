@@ -37,18 +37,18 @@ public class MatchData {
     private String white;
     private String black;
     private String timeControl;
-    private int[] result;
+    private double[] result;
     @ElementCollection
     @CollectionTable(name = "MOVES", joinColumns = @JoinColumn(name="id"))
     @Column(name="MOVE_NOTATION")
     private List<String> moves;
 
     public MatchData() {
-        this.result = new int[]{0,0};
+        this.result = new double[]{0,0};
         this.moves = new ArrayList<>();
     }
 
-    public MatchData(String event, String site, LocalDate date, int round, String white, String black, String timeControl, int[] result,
+    public MatchData(String event, String site, LocalDate date, int round, String white, String black, String timeControl, double[] result,
                     List<String> moves) {
         this.event = event;
         this.site = site;
@@ -124,7 +124,7 @@ public class MatchData {
         return timeControl;
     }
 
-    public int[] getResult() {
+    public double[] getResult() {
         return result;
     }
 
@@ -164,7 +164,7 @@ public class MatchData {
         this.timeControl = timeControl;
     }
 
-    public void setResult(int[] result) {
+    public void setResult(double[] result) {
         this.result = result;
     }
 

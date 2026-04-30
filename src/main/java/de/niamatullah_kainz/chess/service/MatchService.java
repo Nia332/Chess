@@ -12,11 +12,11 @@ Handles all the logic regarding a single match.
 @Service
 public class MatchService {
 
-    private final Scanner scanner;
+    private final Scanner scanner = new Scanner(System.in);
     private MatchData matchData = new MatchData();
     
-    public MatchService(Scanner scanner) {
-        this.scanner = scanner;
+    public MatchService() {
+
     }
     
     protected void start() {

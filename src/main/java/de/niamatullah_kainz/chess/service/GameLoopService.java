@@ -11,7 +11,7 @@ too when the player wants to stop playing matches.
 public class GameLoopService {
 
     private final Scanner scanner = new Scanner(System.in);
-    private final MatchService matchService = new MatchService(scanner);
+    private final MatchService matchService = new MatchService();
     
     public GameLoopService() {
 

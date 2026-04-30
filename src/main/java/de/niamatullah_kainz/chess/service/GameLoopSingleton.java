@@ -1,5 +1,4 @@
-package de.niamatullah_kainz.chess.model;
-import de.niamatullah_kainz.chess.service.GameLoopService;
+package de.niamatullah_kainz.chess.service;
 
 public class GameLoopSingleton {
 
